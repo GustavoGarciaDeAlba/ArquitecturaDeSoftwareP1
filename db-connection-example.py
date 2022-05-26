@@ -1,23 +1,22 @@
 from pymongo import MongoClient
-import datetime
 
 DB_CONNECTION_STRING = "mongodb+srv://jesus:cisco@arquitecturadesoftware.ddie5.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(DB_CONNECTION_STRING)
 
 db = client.arquitecturadesoftware
-empresa = db.empresa
-clientes = db.clientes
-empleados = db.empleados
+empresa_equipo1 = db.empresa_equipo1
+clientes_equipo1 = db.clientes_equipo1
+empleados_equipo1 = db.empleados_equipo1
 
 # CREATE OBJECT TO USE IN 'INSERT'
 """ 
-empresa_1 = {
+nueva_empresa = {
     "id": 1,
     "nombre": "Big Dick Destroyer"
 } 
 """
 # DO THE ACTUAL INSERTION IN DB
-# empresa.insert_one(empresa_1)
+# empresa_equipo1.insert_one(nueva_empresa)
 
 # SEARCH IN TABLE BY SOME ATTRIBUTES IN THE OBJECT OF THE CLASS
-print(empresa.find_one({ "nombre": "Big Dick Destroyer" }))
+print(empresa_equipo1.find_one({ "nombre": "Big Dick Destroyer" }))
