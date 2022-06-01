@@ -20,4 +20,4 @@ empresa_1 = {
 # empresa.insert_one(empresa_1)
 
 # SEARCH IN TABLE BY SOME ATTRIBUTES IN THE OBJECT OF THE CLASS
-print(empresa.find_one({ "nombre": "Big Dick Destroyer" }))
+print(empresa.find_one({ "id": 1 }))
