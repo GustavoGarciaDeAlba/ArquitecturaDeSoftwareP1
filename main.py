@@ -1,3 +1,4 @@
+import json
 from pymongo import MongoClient
 
 from Client import Client
@@ -37,30 +38,27 @@ class App:
     def showCompaniesData(self):
         COMPANIES = self.getCompaniesFromDB()
         for company in COMPANIES:
+            company = Company(company)
             print(company.getName())
             print("Employees: ")
             for employee in company.getEmployees():
-                print(employee)
+                print(json.dumps(employee, indent=4, sort_keys=True))
             print("Clients: ")
             for client in company.getClients():
-                print(client)
+                print(json.dumps(client, indent=4, sort_keys=True))
 
     def registerCompany(self):
         companyName = input("Enter the name of the company: ")
         employees = self.registerEmployees(companyName)
-        clients = self.registerClient(companyName)
-        newCompany = Company(companyName, employees, clients)
-        self.DB.companies.insert_one({
-            "name": newCompany.getName(),
-            "employees": newCompany.getEmployees(),
-            "clients": newCompany.getClients()
-        })
+        clients = self.registerClients(companyName)
+        newCompany = Company(companyName, clients, employees)
+        self.DB.companies.insert_one(newCompany.__dict__)
         return newCompany
     
     def registerEmployees(self, company):
         employees = []
         while True:
-            employees.append(self.registerEmployee(company))
+            employees.append(self.registerEmployee(company).__dict__)
             if int(input("Do you want to add another employee? (1. Yes, 2. No): ")) == 2:
                 break
         return employees
@@ -68,7 +66,7 @@ class App:
     def registerClients(self, company):
         clients = []
         while True:
-            clients.append(self.registerClient(company))
+            clients.append(self.registerClient(company).__dict__)
             if int(input("Do you want to add another client? (1. Yes, 2. No): ")) == 2:
                 break
         return clients
@@ -83,39 +81,20 @@ class App:
             print("Register subordinates: ")
             subordinates = self.registerEmployees(company)
             employee = Directive(name, company, age, salary, category, subordinates)
-            self.DB.directives.insert_one({
-                "name": employee.getName(),
-                "company": employee.getCompany(),
-                "age": employee.getAge(),
-                "salary": employee.getSalary(),
-                "category": employee.getCategory(),
-                "subordinates": employee.getSubordinates()
-            })
+            self.DB.directives.insert_one(employee.__dict__)
         else:
             employee = Employee(name, company, age, salary, isDirective)
-            self.DB.employees.insert_one({
-                "name": employee.getName(),
-                "company": employee.getCompany(),
-                "age": employee.getAge(),
-                "salary": employee.getSalary(),
-                "isDirective": employee.getIsDirective()
-            })
+            self.DB.employees.insert_one(employee.__dict__)
 
         return employee
 
     def registerClient(self, company):
         name = input("Enter the name of the client: ")
-        company = input("Enter the name of the client: ")
         age = input("Enter the age of the client: ")
         phone = input("Enter the phone of the client: ")
         client = Client(name, company, age, phone)
 
-        self.DB.clients.insert_one({
-            "name": client.getName(),
-            "company": client.getCompany(),
-            "age": client.getAge(),
-            "phone": client.getPhone()
-        })
+        self.DB.clients.insert_one(client.__dict__)
 
         return client
 

@@ -31,7 +31,3 @@ class Client:
     
     def setPhone(self,phone):
         self.phone = phone
-    
-    def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__, 
-            sort_keys=True, indent=4)

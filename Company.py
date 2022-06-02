@@ -7,6 +7,10 @@ class Company:
         self.clients = clients
         self.employees = employees
     
+    def __init__(self, my_dict):
+        for key in my_dict:
+            setattr(self, key, my_dict[key])
+    
     def getName(self):
         return self.name
     
@@ -27,7 +31,3 @@ class Company:
     
     def addEmployee(self, empleado):
         self.employees.append(empleado)
-    
-    def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__, 
-            sort_keys=True, indent=4)
