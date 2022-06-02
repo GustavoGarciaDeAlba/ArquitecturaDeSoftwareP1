@@ -42,10 +42,10 @@ class App:
             print(company.getName())
             print("Employees: ")
             for employee in company.getEmployees():
-                print(json.dumps(employee, indent=4, sort_keys=True))
+                print(employee)
             print("Clients: ")
             for client in company.getClients():
-                print(json.dumps(client, indent=4, sort_keys=True))
+                print(client)
 
     def registerCompany(self):
         companyName = input("Enter the name of the company: ")
