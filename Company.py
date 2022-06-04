@@ -29,5 +29,5 @@ class Company:
     def setEmployees(self,employees):
         self.employees = employees
     
-    def addEmployee(self, empleado):
-        self.employees.append(empleado)
+    def addEmployee(self, employee):
+        self.employees.append(employee)

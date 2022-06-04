@@ -40,12 +40,12 @@ class App:
         for company in COMPANIES:
             company = Company(company)
             print(company.getName())
-            print("Employees: ")
+            print("\nEmployees: ")
             for employee in company.getEmployees():
-                print(employee)
-            print("Clients: ")
+                print("Name: " + employee["name"] + " Company: " + employee["company"] + " Age: " + employee["age"] + " Salary: " + employee["salary"] + " Directive: " + str(employee["isDirective"]) + " Category: " + employee["category"] + " Subordinates: " + str(employee["subordinates"]) + "\n")
+            print("\nClients")
             for client in company.getClients():
-                print(client)
+                print("Name: " + client["name"] + " Company: " + client["company"] + " Age: " + client["age"] + " Phone: " + client["phone"])
 
     def registerCompany(self):
         companyName = input("Enter the name of the company: ")
