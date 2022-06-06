@@ -1,5 +1,6 @@
 import json
 from pymongo import MongoClient
+from bson import ObjectId
 
 from Client import Client
 from Directive import Directive
@@ -38,14 +39,12 @@ class App:
     def showCompaniesData(self):
         COMPANIES = self.getCompaniesFromDB()
         for company in COMPANIES:
-            company = Company(company)
-            print(company.getName())
-            print("\nEmployees: ")
-            for employee in company.getEmployees():
-                print("Name: " + employee["name"] + " Company: " + employee["company"] + " Age: " + employee["age"] + " Salary: " + employee["salary"] + " Directive: " + str(employee["isDirective"]) + " Category: " + employee["category"] + " Subordinates: " + str(employee["subordinates"]) + "\n")
-            print("\nClients")
-            for client in company.getClients():
-                print("Name: " + client["name"] + " Company: " + client["company"] + " Age: " + client["age"] + " Phone: " + client["phone"])
+            company = json.loads(JSONEncoder().encode(company))
+            print("======",company["name"], "======")
+            print("\nEMPLOYEES: ")
+            print(company["employees"])
+            print("\nCLIENTS: ")
+            print(company["clients"])
 
     def registerCompany(self):
         companyName = input("Enter the name of the company: ")
@@ -97,6 +96,12 @@ class App:
         self.DB.clients.insert_one(client.__dict__)
 
         return client
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
 
 app = App()
 app.run()

@@ -2,15 +2,11 @@ import json
 
 class Company:
     
-    def __init__(self,name, clients, employees):
+    def __init__(self, name, clients, employees):
         self.name = name
         self.clients = clients
         self.employees = employees
-    
-    def __init__(self, my_dict):
-        for key in my_dict:
-            setattr(self, key, my_dict[key])
-    
+
     def getName(self):
         return self.name
     
